@@ -1,0 +1,6 @@
+dataset:
+  train_file: 'resources/data/vimedner/train.csv'
+  dev_file: 'resources/data/vimedner/dev.csv'
+  test_file: 'resources/data/vimedner/test.csv'
+  labels_file: 'resources/data/vimedner/labels.csv'
+  max_length: 128
