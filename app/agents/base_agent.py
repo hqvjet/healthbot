@@ -1,4 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
+from ollama import AsyncClient
 
 
 class HealthBotAgents:
@@ -17,3 +18,5 @@ class HealthBotAgents:
         Sets the prompt template for the agent.
         """
         self.prompt_template = prompt
+
+client = AsyncClient()
