@@ -1,21 +1,28 @@
-import ollama
-# from app.agents.base_agent import BaseAgent
+from langchain_ollama import OllamaLLM
+from langchain_core.prompts import ChatPromptTemplate
 
-# class DiagnosisAgent(BaseAgent):
-#     def __init__(self, model_name: str = "diagnosis-agent"):
-#         super().__init__(name="Diagnosis Agent", description="Agent for diagnosing conditions based on symptoms.")
-#         self.model_name = model_name
-#         self.client = ollama.Client()
+from utils import config
 
-#     def diagnose(self, query: str) -> str:
-#         """
-#         Diagnose a condition based on the provided query.
-        
-#         :param query: The query string to analyze.
-#         :return: A string containing the diagnosis.
-#         """
-#         response = self.client.chat(
-#             model=self.model_name,
-#             messages=[{"role": "user", "content": query}]
-#         )
-#         return response['message']['content']
+prompt_config = config['prompt']
+
+class AdviseAgent:
+
+    def __init__(self, retriever):
+        self.model = OllamaLLM(
+            model=config['model']['name']
+        )
+        self.prompt = ChatPromptTemplate.from_template(prompt_config['template'])
+        self.chain = self.prompt | self.model
+        self.retriever = retriever
+
+    def execute(self, query, msg_history):
+        """
+        Execute the agent with the given query.
+        """
+        # Retrieve relevant documents
+        docs = self.retriever.invoke(query)
+
+        # Generate the response using the model
+        response = self.chain.stream({"conversation": docs, "question": query, "msg_history": msg_history})
+
+        return response
