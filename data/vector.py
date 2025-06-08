@@ -5,14 +5,12 @@ import os
 from utils import config
 from data.document import load_document
 
-
 doc_config = config['document']
 
 def create_vector_store():
     """
     Create a vector store from the document dataset.
     """
-
 
     if not os.path.exists(doc_config['db_location']):
         os.makedirs(doc_config['db_location'])
@@ -38,8 +36,5 @@ def load_retriever():
         persist_directory=doc_config['db_location'],
         embedding_function=OllamaEmbeddings(model=doc_config['model']),
     )
-    retriver = vector_store.as_retriever(search_kwargs={"k": 5})
+    retriver = vector_store.as_retriever(search_kwargs={"k": 3})
     return retriver
-
-# retri = load_retriever()
-# print(retri.invoke("em bị đau bụng"))
