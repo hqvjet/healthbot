@@ -1,22 +1,27 @@
-from langchain_core.prompts import ChatPromptTemplate
-from ollama import AsyncClient
+from langchain_ollama import OllamaLLM
+from langchain_core.prompts import FewShotPromptTemplate
 
+from app.utils import config
 
 class HealthBotAgents:
 
     def __init__(self):
-        pass
+        self.model = OllamaLLM(
+            model=config['model']['name']
+        )
 
-    def get_prompt(self) -> ChatPromptTemplate:
-        """
-        Returns the prompt template for the agent.
-        """
-        return self.prompt_template
+        self.diag_chain = None
 
-    def set_prompt(self, prompt: ChatPromptTemplate):
+    def set_prompt(self, prompt: FewShotPromptTemplate):
         """
         Sets the prompt template for the agent.
         """
-        self.prompt_template = prompt
+        self.diag_chain = prompt | self.model
 
-client = AsyncClient()
+    def get_chain(self):
+        """
+        Returns the chain for the agent.
+        """
+        if self.diag_chain is None:
+            raise ValueError("Prompt template not set. Please set the prompt using set_prompt method.")
+        return self.diag_chain

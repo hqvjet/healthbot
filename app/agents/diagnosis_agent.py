@@ -1,21 +1,21 @@
 import ollama
-from app.agents.base_agent import BaseAgent
 
-class DiagnosisAgent(BaseAgent):
-    def __init__(self, model_name: str = "diagnosis-agent"):
-        super().__init__(name="Diagnosis Agent", description="Agent for diagnosing conditions based on symptoms.")
-        self.model_name = model_name
-        self.client = ollama.Client()
+from app.utils import config
+from langchain_core.prompts import PromptTemplate, FewShotPromptTemplate
 
-    def diagnose(self, query: str) -> str:
-        """
-        Diagnose a condition based on the provided query.
-        
-        :param query: The query string to analyze.
-        :return: A string containing the diagnosis.
-        """
-        response = self.client.chat(
-            model=self.model_name,
-            messages=[{"role": "user", "content": query}]
+class DiagnosisAgent():
+    def __init__(self):
+        self.config = config['prompting']['diagnosis_agent']
+        self.agent_name = self.config['name']
+        example_formatter = PromptTemplate.from_template(
+            "Question: {question}\nAnswer: {answer}"
         )
-        return response['message']['content']
+        self.fewshot_prompt = FewShotPromptTemplate(
+            example_prompt=example_formatter,
+            examples=self.config['examples'],
+            suffix="Question: {question}\nAnswer:",
+            input_variables=["question"]
+        )
+
+    def get_prompts(self):
+        return self.fewshot_prompt
