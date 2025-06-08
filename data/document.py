@@ -1,7 +1,5 @@
 from datasets import load_dataset
-from langchain_ollama import OllamaEmbeddings
 from langchain_core.documents import Document
-import os
 
 from utils import config
 
@@ -14,10 +12,6 @@ def load_document():
 
     ds1 = load_dataset(doc_config['dataset1'])['train']
 
-    embeddings = OllamaEmbeddings(model=doc_config['model'])
-
-    if not os.path.exists(doc_config['db_location']):
-        os.makedirs(doc_config['db_location'])
 
     ids = []
     docs = []
