@@ -1,6 +1,6 @@
 import yaml
 
-config_path = 'app/config.yaml'
+config_path = 'config.yaml'
 def load_yaml(file_path: str):
     """Load a YAML file and return its content."""
     try:

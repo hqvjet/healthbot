@@ -18,3 +18,9 @@ prompting:
 
 model:
   name: "mrjacktung/phogpt-4b-chat-gguf"
+
+document:
+  model: "bge-m3"
+  dataset1: "hungnm/vietnamese-medical-qa"
+  db_location: "data/vector_db"
+  docs_location: "data/QA_docs"
