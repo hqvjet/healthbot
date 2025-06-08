@@ -1,19 +1,28 @@
+from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 
+from utils import config
+
+prompt_config = config['prompt']
 
 class HealthBotAgents:
 
-    def __init__(self):
-        pass
+    def __init__(self, retriever):
+        self.model = OllamaLLM(
+            model=config['model']['name']
+        )
+        self.prompt = ChatPromptTemplate.from_template(prompt_config['template'])
+        self.chain = self.prompt | self.model
+        self.retriever = retriever
 
-    def get_prompt(self) -> ChatPromptTemplate:
+    def execute(self, query, msg_history):
         """
-        Returns the prompt template for the agent.
+        Execute the agent with the given query.
         """
-        return self.prompt_template
+        # Retrieve relevant documents
+        docs = self.retriever.invoke(query)
 
-    def set_prompt(self, prompt: ChatPromptTemplate):
-        """
-        Sets the prompt template for the agent.
-        """
-        self.prompt_template = prompt
+        # Generate the response using the model
+        response = self.chain.stream({"conversation": docs, "question": query, "msg_history": msg_history})
+
+        return response

@@ -1,0 +1,15 @@
+prompt:
+  template: |
+    Bạn là bác sĩ tư vấn về sức khỏe. Hãy trả lời câu hỏi của người dùng một cách chính xác, dễ hiểu và không lan man. Nếu bạn không chắc chắn, hãy nói rằng bạn không biết.
+    Bạn hãy cân nhắc khi nào nên dùng thông tin từ lịch sử hội thoại hoặc từ đoạn hội thoại chứa thông tin liên quan để trả lời câu hỏi của người dùng.
+    Đây là những đoạn hội thoại chứa thông tin liên quan: {conversation}
+    Đây là lịch sử hội thoại của bạn và user: {msg_history}
+    Đây là câu hỏi của người dùng: {question}
+model:
+  name: "mrjacktung/phogpt-4b-chat-gguf"
+
+document:
+  model: "bge-m3"
+  dataset1: "hungnm/vietnamese-medical-qa"
+  db_location: "data/vector_db"
+  docs_location: "data/QA_docs"
