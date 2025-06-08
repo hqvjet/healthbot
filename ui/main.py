@@ -1,5 +1,11 @@
 import chainlit as cl
-from app.agents.base_agent import client
+from app.agents import HealthBotAgents, DiagnosisAgent
+
+bot_agents = HealthBotAgents()
+diag_agent = DiagnosisAgent()
+diag_prompt = diag_agent.get_prompts()
+bot_agents.set_prompt(diag_prompt)
+chain = bot_agents.get_chain()
 
 @cl.on_chat_start
 async def start():
@@ -15,7 +21,11 @@ async def start():
     cl.user_session.set("HealthBot", [
         {
             "role": "system",
-            "content": "You are a helpful health assistant. Provide accurate and concise information about health-related queries."
+            "content": "Bạn là một trợ lý sức khỏe, chuyên cung cấp thông tin và hỗ trợ người dùng về các vấn đề sức khỏe. Hãy trả lời các câu hỏi của người dùng một cách chính xác và thân thiện theo các fewshot learning đã cho, các fewshot learning trên chỉ là ví dụ, không phải của user hiện tại"
+        },
+        {
+            "role": "assistant",
+            "content": "Chào bạn, tôi là trợ lý sức khỏe của bạn. Bạn có thể hỏi tôi về các triệu chứng, bệnh lý hoặc bất kỳ câu hỏi nào liên quan đến sức khỏe của bạn. Hãy bắt đầu cuộc trò chuyện nào!"
         }
     ])
 
@@ -27,17 +37,14 @@ async def handle_message(message: cl.Message):
         "content": message.content
     })
 
+    print(message_history)
+    print("Message content:", message.content)
+
     msg = cl.Message(content="")
+    resp = chain.stream(message_history)
 
-    stream = await client.chat(
-        model="mrjacktung/phogpt-4b-chat-gguf",
-        messages=message_history,
-        stream=True
-    )
-
-    async for chunk in stream:
-        if not chunk.get("done") and chunk.get("message"):
-            await msg.stream_token(chunk.message.content)
+    for chunk in resp:
+        await msg.stream_token(chunk)
 
     message_history.append({
         "role": "assistant",

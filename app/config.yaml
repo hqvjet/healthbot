@@ -1,0 +1,20 @@
+prompting:
+  diagnosis_agent:
+    name: "Diagnosis Agent"
+    examples: [
+      {
+        question: "Tôi là bệnh nhân nam, 52 tuổi, có tiền sử tăng huyết áp. Gần đây xuất hiện đau thắt ngực khi gắng sức, cảm giác nặng ngực lan lên vai trái, hồi hộp, vã mồ hôi.",
+        answer: "🔍 **Chẩn đoán sơ bộ:**\n- Hội chứng vành (Angina pectoris), khả năng cao do xơ vữa động mạch vành.\n\n📋 **Chẩn đoán phân biệt:**\n- Nhồi máu cơ tim cận lâm sàng\n- Viêm màng ngoài tim\n- Co thắt thực quản\n\n🧪 **Khuyến nghị xét nghiệm & thủ thuật tiếp theo:**\n1. Điện tâm đồ (ECG) lúc nghỉ và gắng sức\n2. Xét nghiệm men tim (Troponin I/T)\n3. Siêu âm tim để đánh giá chức năng tâm thất\n4. Chụp mạch vành xâm lấn hoặc CT động mạch vành nếu cần"
+      },
+      {
+        question: "Tôi là bệnh nhân nữ, 28 tuổi, không tiền sử bệnh mạn. Khoảng 2 ngày nay sốt cao 39°C, đau đầu, đau cơ toàn thân, mệt mỏi, kèm chảy nước mũi trong, họng đỏ.",
+        answer: "🔍 **Chẩn đoán sơ bộ:**\n- Nhiễm virus cúm (Influenza)\n\n📋 **Chẩn đoán phân biệt:**\n- Cảm lạnh thông thường (Common cold)\n- Viêm họng do liên cầu nhóm A\n- Nhiễm COVID-19\n\n🧪 **Khuyến nghị xét nghiệm & thủ thuật tiếp theo:**\n1. Test nhanh cúm A/B hoặc PCR cúm\n2. Test kháng nguyên SARS-CoV-2\n3. Công thức máu (CBC) để đánh giá bạch cầu\n4. Điều trị triệu chứng: hạ sốt, bù dịch, nghỉ ngơi"
+      },
+      {
+        question: "Tôi là bệnh nhân nam, 35 tuổi, không có bệnh lý nền. Khởi phát sốt nhẹ 38°C, ho khan kéo dài 3 tuần, mệt mỏi, sụt cân không rõ nguyên nhân khoảng 3kg.",
+        answer: "🔍 **Chẩn đoán sơ bộ:**\n- Viêm phổi mãn tính, nghi ngờ lao phổi\n\n📋 **Chẩn đoán phân biệt:**\n- Viêm phế quản mạn\n- Viêm phổi do Mycoplasma\n- Nhiễm HIV (giai đoạn đầu)\n\n🧪 **Khuyến nghị xét nghiệm & thủ thuật tiếp theo:**\n1. X-quang ngực thẳng\n2. Soi đờm tìm vi khuẩn lao (AFB smear & culture)\n3. Xét nghiệm Mantoux hoặc IGRA (Quantiferon)\n4. Công thức máu tổng quát và chức năng gan, thận"
+      }
+    ]
+
+model:
+  name: "mrjacktung/phogpt-4b-chat-gguf"
