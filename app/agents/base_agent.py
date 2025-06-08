@@ -1,27 +1,28 @@
 from langchain_ollama import OllamaLLM
-from langchain_core.prompts import FewShotPromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 
-from app.utils import config
+from utils import config
+
+prompt_config = config['prompt']
 
 class HealthBotAgents:
 
-    def __init__(self):
+    def __init__(self, retriever):
         self.model = OllamaLLM(
             model=config['model']['name']
         )
+        self.prompt = ChatPromptTemplate.from_template(prompt_config['template'])
+        self.chain = self.prompt | self.model
+        self.retriever = retriever
 
-        self.diag_chain = None
+    def execute(self, query, msg_history):
+        """
+        Execute the agent with the given query.
+        """
+        # Retrieve relevant documents
+        docs = self.retriever.invoke(query)
 
-    def set_prompt(self, prompt: FewShotPromptTemplate):
-        """
-        Sets the prompt template for the agent.
-        """
-        self.diag_chain = prompt | self.model
+        # Generate the response using the model
+        response = self.chain.stream({"conversation": docs, "question": query, "msg_history": msg_history})
 
-    def get_chain(self):
-        """
-        Returns the chain for the agent.
-        """
-        if self.diag_chain is None:
-            raise ValueError("Prompt template not set. Please set the prompt using set_prompt method.")
-        return self.diag_chain
+        return response
