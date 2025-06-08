@@ -12,9 +12,16 @@ async def start():
         content="Chào bạn, tôi là trợ lý sức khỏe của bạn. Bạn có thể hỏi tôi về các triệu chứng, bệnh lý hoặc bất kỳ câu hỏi nào liên quan đến sức khỏe của bạn. Hãy bắt đầu cuộc trò chuyện nào!"
     ).send()
 
+    cl.user_session.set("HealthBot", [
+        {
+            "role": "system",
+            "content": "You are a helpful health assistant. Provide accurate and concise information about health-related queries."
+        }
+    ])
+
 @cl.on_message
 async def handle_message(message: cl.Message):
-    message_history = cl.user_session.get("agent")
+    message_history = cl.user_session.get("HealthBot")
     message_history.append({
         "role": "user",
         "content": message.content
