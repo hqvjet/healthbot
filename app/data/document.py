@@ -1,14 +1,14 @@
 from datasets import load_dataset
 from langchain_core.documents import Document
 
-from utils import config
+from app.utils import configs
 
 def load_document():
     """
     Load the document dataset and create a vector store.
     """
     # Load the configuration for the document
-    doc_config = config['document']
+    doc_config = configs['document']
 
     ds1 = load_dataset(doc_config['dataset1'])['train']
 

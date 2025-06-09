@@ -2,10 +2,7 @@
 from langchain_ollama import OllamaLLM  # For interacting with Ollama language models
 from langchain_core.prompts import ChatPromptTemplate  # For creating chat-based prompt templates
 
-from utils import config  # Import configuration settings
-
-# Load the prompt configuration from the YAML file
-prompt_config = config['prompt']
+from app.utils import prompts  # Import configuration settings
 
 class AdviseAgent:
     """
@@ -24,7 +21,7 @@ class AdviseAgent:
             model: An optional language model. If not provided, a default model can be used.
             retriever: An optional retriever for fetching relevant documents.
         """
-        prompt = ChatPromptTemplate.from_template(prompt_config['template'])
+        prompt = ChatPromptTemplate.from_template(prompts['advise_template'])
         self.chain = prompt | model
         self.retriever = retriever
 
@@ -44,6 +41,6 @@ class AdviseAgent:
         docs = self.retriever.invoke(query)
 
         # Generate the response using the model
-        response = self.chain.stream({"conversation": docs, "question": query, "msg_history": msg_history})
+        response = self.chain.stream({"conversation": docs, "question": query, "msg_history": msg_history, "fewshot": prompts['advise_fewshot']})
 
         return response

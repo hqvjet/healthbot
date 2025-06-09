@@ -1,6 +1,3 @@
-model:
-  name: "mrjacktung/phogpt-4b-chat-gguf"
-
 document:
   model: "bge-m3"
   dataset1: "hungnm/vietnamese-medical-qa"

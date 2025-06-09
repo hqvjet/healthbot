@@ -4,7 +4,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI  # For interacting wit
 
 
 
-from utils import prompts  # Import custom prompts from the utils module
+from app.utils import prompts  # Import custom prompts from the utils module
 
 class IntentClassifier:
     """
@@ -34,7 +34,7 @@ class IntentClassifier:
         Returns:
             A list of classified intents as strings.
         """
-        intents = self.chain.invoke({"question": query, "fewshot": prompts['fewshot']}).content
+        intents = self.chain.invoke({"question": query, "fewshot": prompts['intent_fewshot']}).content
         intents = intents.strip().replace(' ', '')
         intents = intents.split(',')
         return intents

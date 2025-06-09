@@ -1,11 +1,14 @@
 import chainlit as cl
 
-from app.agents import HealthBotAgents
-from data.vector import load_retriever
+from app.agents import Orchestrator
 
-
-retriever = load_retriever()
-agent = HealthBotAgents(retriever=retriever)
+orc = Orchestrator()
+INTENTS = [
+    "advise",  # Ask for health advice
+    "image_search",  # Search for disease-related images
+    "booking"  # Book an appointment with a doctor
+    "unknown"  # Unknown intent
+]
 
 @cl.on_chat_start
 async def start():
@@ -29,14 +32,43 @@ async def start():
 async def handle_message(message: cl.Message):
     message_history = cl.user_session.get("HealthBot")
 
-    print(message_history)
-    print("Message content:", message.content)
-
     msg = cl.Message(content="")
-    resp = agent.execute(message.content, message_history)
 
-    for chunk in resp:
-        await msg.stream_token(chunk)
+    intents = orc.classify_intent(message.content)
+
+    if intents[0] == INTENTS[-1]:  # If the intent is 'unknown'
+        msg.content = "Xin lỗi, tôi chỉ có nhiệm vụ tư vấn và hỗ trợ bạn về vấn đề sức khỏe. Bạn có thể thử hỏi lại hoặc cung cấp thêm thông tin chi tiết hơn."
+        await msg.send()
+        return 
+    else:
+        for intent in intents:
+            if not intent in INTENTS:
+                msg.content = "Xin lỗi, tôi không hiểu ý của bạn. Bạn có thể thử hỏi lại hoặc cung cấp thêm thông tin chi tiết hơn."
+                await msg.send()
+                return
+            
+            if intent == INTENTS[1]:
+                resp = orc.get_image_search_results(message.content)
+                print(resp)
+                imgs = []
+                for element in resp:
+                    imgs.append(
+                        cl.Image(
+                            name=element['title'],
+                            url=element['thumbnail'],
+                            display='inline',
+                        )
+                    )
+                
+                msg.elements = imgs
+                await msg.send()
+
+            if intent == INTENTS[0]:
+                # If the intent is 'advise', get health advice
+                resp = orc.get_advice(message.content, message_history)
+                for chunk in resp:
+                    print(chunk)
+                    await msg.stream_token(chunk.content)
 
     message_history.append({
         "role": "user",
@@ -47,5 +79,5 @@ async def handle_message(message: cl.Message):
         "role": "assistant",
         "content": msg.content
     })
-    message_history.append({"role": "assistant", "content": msg.content})
+
     await msg.update()

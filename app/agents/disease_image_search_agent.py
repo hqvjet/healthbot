@@ -2,10 +2,7 @@
 from duckduckgo_search import DDGS  # For performing image searches using DuckDuckGo
 from langchain_core.prompts import ChatPromptTemplate  # For creating chat-based prompt templates
 
-from utils import config  # Import configuration settings
-
-# Load the prompt configuration from the YAML file
-prompt_config = config['prompt']
+from app.utils import prompts  # Import configuration settings
 
 class DiseaseImageSearchAgent:
     """
@@ -24,7 +21,7 @@ class DiseaseImageSearchAgent:
             model: An optional language model. If not provided, a default model can be used.
         """
         self.search_engine = DDGS()
-        prompt = ChatPromptTemplate.from_template(config['keyword_extract_template'])
+        prompt = ChatPromptTemplate.from_template(prompts['keyword_extract_template'])
         self.chain = prompt | model
 
     def search_img(self, query: str):
@@ -37,6 +34,7 @@ class DiseaseImageSearchAgent:
         Returns:
             A list of image search results.
         """
+        print('GOOOOOOOOOOOOOOOOOOOOOOOO')
         results = DDGS().images(keywords=query, max_results=3)
         return results
 
@@ -50,7 +48,8 @@ class DiseaseImageSearchAgent:
         Returns:
             A list of image search results or None if no images are found.
         """
-        query = self.chain.invoke({"question": query}).content
+        print(query)
+        query = self.chain.invoke({"question": query, "fewshot": prompts['keyword_extract_fewshot']}).content
         results = self.search_img(query)
         if results:
             return results
