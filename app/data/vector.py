@@ -2,10 +2,10 @@ from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings
 import os
 
-from utils import config
-from data.document import load_document
+from app.utils import configs
+from app.data.document import load_document
 
-doc_config = config['document']
+doc_config = configs['document']
 
 def create_vector_store():
     """
@@ -36,5 +36,5 @@ def load_retriever():
         persist_directory=doc_config['db_location'],
         embedding_function=OllamaEmbeddings(model=doc_config['model']),
     )
-    retriver = vector_store.as_retriever(search_kwargs={"k": 3})
+    retriver = vector_store.as_retriever(search_kwargs={"k": 4})
     return retriver

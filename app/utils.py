@@ -1,7 +1,8 @@
 import yaml
 
 config_path = 'config.yaml'
-def load_yaml(file_path: str):
+prompt_path = 'prompt.yaml'
+def load_config(file_path: str):
     """Load a YAML file and return its content."""
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
@@ -16,4 +17,14 @@ def load_yaml(file_path: str):
         print(f"An unexpected error occurred: {e}")
         return None
     
-config = load_yaml(config_path)
+def load_prompt(file_path: str):
+    """Load a prompt from a YAML file."""
+    p = load_config(file_path)
+    if p:
+        return p['prompt']
+    else:
+        print(f"Prompt not found in {file_path}")
+        return None
+    
+configs = load_config(config_path)
+prompts = load_prompt(prompt_path)

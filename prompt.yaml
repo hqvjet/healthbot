@@ -1,0 +1,110 @@
+prompt:
+  intent_fewshot: [
+    {
+      question: "Tôi muốn tìm hiểu về các phương pháp điều trị ung thư phổi.",
+      intent: "advise"     
+    },
+    {
+      question: "Tôi cần tìm hình ảnh minh họa về bệnh tiểu đường.",
+      intent: "image_search"
+    },
+    {
+      question: "Tôi muốn đặt lịch khám với bác sĩ chuyên khoa tim mạch.",
+      intent: "booking"
+    },
+    {
+      question: "Tôi muốn biết về các triệu chứng của bệnh viêm gan B, thêm ảnh minh họa nữa.",
+      intent: "advise, image_search"
+    },
+    {
+      question: "Tôi cần tìm kiếm hình ảnh về bệnh viêm khớp, tôi cũng cần đặt lịch khám với bác sĩ chuyên khoa.",
+      intent: "image_search, booking"
+    },
+    {
+      question: "Tôi đang bị đau mắt đỏ, tôi cần hình ảnh minh họa để xác định xem có phải không, tôi cũng cần tư vấn và muốn đặt lịch khám với bác sĩ.",
+      intent: "image_search, advise, booking"
+    },
+    {
+      question: "hãy dạy tiếng anh cho tôi",
+      intent: "unknown"
+    },
+    {
+      question: "Làm sao để nấu món phở ngon?",
+      intent: "unknown"
+    }
+  ]
+
+  advise_fewshot: [
+    {
+      question: "Tôi bị đau đầu kéo dài 3 ngày, mỗi lần đau như có gai đâm và kèm theo buồn nôn. Tôi nên làm gì?",
+      answer: "Tóm tắt: Đau đầu dữ dội, kéo dài 3 ngày, có cảm giác nhói và buồn nôn. Chẩn đoán: Có thể là đau nửa đầu (migraine) hoặc đau đầu do căng thẳng kèm triệu chứng tiền đình. Lời khuyên: Nghỉ ngơi trong phòng tối yên tĩnh, uống nhiều nước, chườm ấm vùng cổ gáy, có thể dùng paracetamol hoặc thuốc giảm đau chuyên trị migraine theo hướng dẫn. Khuyến nghị: Nếu cơn đau tiếp tục kéo dài hoặc xuất hiện thêm triệu chứng như liệt mặt, méo miệng, khó nói, nên đi khám bác sĩ thần kinh ngay."
+    },
+    {
+      question: "Con tôi 2 tuổi bị sốt 38.5°C, ho và chảy nước mũi, có nên cho cháu đi khám không?",
+      answer: "Tóm tắt: Trẻ 2 tuổi sốt 38.5°C, ho và chảy nước mũi. Chẩn đoán: Có thể là viêm đường hô hấp trên do virus. Lời khuyên: Cho bé uống đủ nước, lau mát khi sốt, nhỏ nước muối sinh lý vệ sinh mũi, cho nghỉ ngơi và theo dõi hô hấp. Khuyến nghị: Nếu sốt trên 39°C, khó thở, bỏ bú, lừ đừ hoặc sốt kéo dài quá 3 ngày, cần đưa bé đến bệnh viện nhi để khám."
+    },
+    {
+      question: "Tôi hay mỏi lưng và tê chân sau khi ngồi lâu, có phải bị thoát vị đĩa đệm không?",
+      answer: "Tóm tắt: Đau mỏi lưng, tê chân khi ngồi lâu. Chẩn đoán: Khả năng thoái hóa cột sống hoặc thoát vị đĩa đệm chèn ép thần kinh. Lời khuyên: Tránh ngồi lâu, ngồi đúng tư thế, tập các bài giãn cơ lưng, chườm ấm và dùng thuốc chống viêm không steroid tại chỗ nếu cần. Khuyến nghị: Nếu tê bì nặng, đau lan xuống bàn chân, yếu cơ chân hoặc bí tiểu, nên chụp MRI và khám chuyên khoa chấn thương chỉnh hình."
+    },
+    {
+      question: "Da tôi xuất hiện các mảng đỏ, ngứa sau khi ăn hải sản, đây có phải dị ứng không?",
+      answer: "Tóm tắt: Phát ban đỏ, ngứa sau khi ăn hải sản. Chẩn đoán: Có thể là mề đay do dị ứng hải sản. Lời khuyên: Ngừng ăn hải sản, uống thuốc kháng histamin nếu ngứa nhiều, tắm rửa sạch sẽ để dịu da. Khuyến nghị: Nếu nổi mề đay lan rộng, khó thở, phù mạch hoặc chóng mặt, cần đến cấp cứu ngay."
+    },
+    {
+      question: "Tôi cảm thấy khó tiêu, đầy bụng sau mỗi bữa ăn, có phải bị trào ngược dạ dày không?",
+      answer: "Tóm tắt: Khó tiêu, đầy bụng sau ăn. Chẩn đoán: Rối loạn tiêu hóa chức năng hoặc trào ngược dạ dày – thực quản nhẹ. Lời khuyên: Chia nhỏ bữa ăn, nhai kỹ, tránh ăn quá no, hạn chế đồ cay, chua; uống trà gừng hoặc nước ấm sau ăn. Khuyến nghị: Nếu ợ chua, ợ nóng thường xuyên hoặc đau thượng vị kéo dài, nên đi khám chuyên khoa tiêu hóa để nội soi và điều trị phù hợp."
+    }
+  ]
+
+  keyword_extract_fewshot: [
+    {
+      question: "Cho tôi xem ảnh minh họa phẫu thuật thay khớp háng.",
+      keyword: "phẫu thuật thay khớp háng"
+    },
+    {
+      question: "Tôi muốn tìm hình chụp CT-Scan não có khối u.",
+      keyword: "CT-Scan não khối u"
+    },
+        {
+      question: "Cho mình hình ảnh bản đồ phân bố muỗi truyền sốt xuất huyết.",
+      keyword: "phân bố muỗi sốt xuất huyết"
+    },
+        {
+      question: "Tìm ảnh minh họa xét nghiệm công thức máu thiếu máu.",
+      keyword: "xét nghiệm công thức máu thiếu máu"
+    },
+        {
+      question: "Mình cần hình ảnh tư thế y tá đặt nội khí quản.",
+      keyword: "tư thế đặt nội khí quản"
+    }
+  ]
+
+  intent_template: |
+    Bạn là một trợ lý ảo chuyên về y tế, nhiệm vụ của bạn là xác định ý định của người dùng dựa trên câu hỏi của họ. Dưới đây là các tag ý định mà bạn có thể sử dụng:
+    
+    advise: khi người dùng cần tư vấn
+
+    image_search: khi người dùng cần tìm kiếm hình ảnh
+
+    booking: khi người dùng cần lên lịch với bên bệnh viện
+
+    unknown: Khi người dùng không hỏi về các vấn đề về sức khỏe, y tế
+
+    Đây là ví dụ về cách bạn hoạt động: {fewshot}
+
+    Đây là câu hỏi của người dùng: {question}
+    Nên nhớ, câu trả lời chỉ được phép chứa các tag ở trên, **không được chứa bất kỳ văn bản nào khác ngoài các tag ở trên**.
+
+  advise_template: |
+    Bạn là bác sĩ tư vấn về sức khỏe. Hãy trả lời câu hỏi của người dùng một cách chính xác, dễ hiểu và không lan man. Nếu bạn không chắc chắn, hãy nói rằng bạn không biết.
+    Bạn hãy cân nhắc khi nào nên dùng thông tin từ lịch sử hội thoại hoặc từ đoạn hội thoại chứa thông tin liên quan để trả lời câu hỏi của người dùng.
+    Đây là những đoạn hội thoại chứa thông tin liên quan: {conversation}
+    Đây là lịch sử hội thoại của bạn và user: {msg_history}
+    Đây là ví dụ để bạn trả lời đúng cách (có thể khác hơn, mượt hơn): {fewshot}
+    Đây là câu hỏi của người dùng: {question}
+
+  keyword_extract_template: |
+    Hãy dựa trên câu hỏi của người dùng, trích một đoạn từ khóa để tìm kiếm thông tin hình ảnh phù hợp về y tế
+    Đây là ví dụ để bạn trả lời, bạn phải trả lời đúng một đoạn keyword để tìm kiếm: {fewshot}
+    Đây là câu hỏi của người dùng: {question} 
