@@ -34,8 +34,7 @@ class DiseaseImageSearchAgent:
         Returns:
             A list of image search results.
         """
-        print('GOOOOOOOOOOOOOOOOOOOOOOOO')
-        results = DDGS().images(keywords=query, max_results=3)
+        results = DDGS().images(keywords=query, max_results=4)
         return results
 
     def execute(self, query: str):
@@ -48,7 +47,6 @@ class DiseaseImageSearchAgent:
         Returns:
             A list of image search results or None if no images are found.
         """
-        print(query)
         query = self.chain.invoke({"question": query, "fewshot": prompts['keyword_extract_fewshot']}).content
         results = self.search_img(query)
         if results:

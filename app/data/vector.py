@@ -36,5 +36,5 @@ def load_retriever():
         persist_directory=doc_config['db_location'],
         embedding_function=OllamaEmbeddings(model=doc_config['model']),
     )
-    retriver = vector_store.as_retriever(search_kwargs={"k": 4})
+    retriver = vector_store.as_retriever(search_kwargs={"k": 5})
     return retriver

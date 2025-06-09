@@ -67,7 +67,6 @@ async def handle_message(message: cl.Message):
                 # If the intent is 'advise', get health advice
                 resp = orc.get_advice(message.content, message_history)
                 for chunk in resp:
-                    print(chunk)
                     await msg.stream_token(chunk.content)
 
     message_history.append({
