@@ -1,5 +1,5 @@
 __pycache__
 venv
 .chainlit
-data/vector_db
+app/data/vector_db
 .env

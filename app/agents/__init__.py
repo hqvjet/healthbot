@@ -1,4 +1,4 @@
-# from app.agents.diagnosis_agent import DiagnosisAgent
-# # from app.agents.advice_agent import AdviceAgent
-# # from app.agents.symptom_agent import SymptomAgent
-from app.agents.base_agent import HealthBotAgents
+from app.agents.advice_agent import AdviseAgent
+from app.agents.disease_image_search_agent import DiseaseImageSearchAgent
+from app.agents.intent_cls import IntentClassifier
+from app.agents.orchestrator import Orchestrator
