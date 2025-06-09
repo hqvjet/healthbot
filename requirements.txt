@@ -1,6 +1,7 @@
-ollama
-langchain-ollama
 langchain-chroma
+langchain-google-genai
 pandas
 chainlit
 datasets
+duckduckgo-search
+python-dotenv

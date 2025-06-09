@@ -1,23 +1,44 @@
-from langchain_ollama import OllamaLLM
-from langchain_core.prompts import ChatPromptTemplate
+# Import necessary modules
+from langchain_ollama import OllamaLLM  # For interacting with Ollama language models
+from langchain_core.prompts import ChatPromptTemplate  # For creating chat-based prompt templates
 
-from utils import config
+from utils import config  # Import configuration settings
 
+# Load the prompt configuration from the YAML file
 prompt_config = config['prompt']
 
 class AdviseAgent:
+    """
+    A class for providing health advice based on user queries, retrieved documents and their conversation history.
 
-    def __init__(self, retriever):
-        self.model = OllamaLLM(
-            model=config['model']['name']
-        )
-        self.prompt = ChatPromptTemplate.from_template(prompt_config['template'])
-        self.chain = self.prompt | self.model
+    Attributes:
+        chain: A chain combining a prompt template and a language model.
+        retriever: A retriever for fetching relevant documents.
+    """
+
+    def __init__(self, model=None, retriever=None):
+        """
+        Initialize the AdviseAgent with a language model and a retriever.
+
+        Args:
+            model: An optional language model. If not provided, a default model can be used.
+            retriever: An optional retriever for fetching relevant documents.
+        """
+        prompt = ChatPromptTemplate.from_template(prompt_config['template'])
+        self.chain = prompt | model
         self.retriever = retriever
 
     def execute(self, query, msg_history):
         """
-        Execute the agent with the given query.
+        Execute the agent with the given query and conversation history.
+
+        Args:
+            query: The user query string.
+            msg_history: The history of messages exchanged in the conversation.
+
+        Returns:
+            A streamming response by the language model based on the query and retrieved documents, 
+            the reponse need to be handle to be used.
         """
         # Retrieve relevant documents
         docs = self.retriever.invoke(query)

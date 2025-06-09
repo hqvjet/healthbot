@@ -1,0 +1,48 @@
+prompt:
+  fewshot: [
+    {
+      question: "Tôi muốn tìm hiểu về các phương pháp điều trị ung thư phổi.",
+      intent: "advise"     
+    },
+    {
+      question: "Tôi cần tìm hình ảnh minh họa về bệnh tiểu đường.",
+      intent: "image_search"
+    },
+    {
+      question: "Tôi muốn đặt lịch khám với bác sĩ chuyên khoa tim mạch.",
+      intent: "booking"
+    },
+    {
+      question: "Tôi muốn biết về các triệu chứng của bệnh viêm gan B, thêm ảnh minh họa nữa.",
+      intent: "advise, image_search"
+    },
+    {
+      question: "Tôi cần tìm kiếm hình ảnh về bệnh viêm khớp, tôi cũng cần đặt lịch khám với bác sĩ chuyên khoa.",
+      intent: "image_search, booking"
+    },
+    {
+      question: "Tôi đang bị đau mắt đỏ, tôi cần hình ảnh minh họa để xác định xem có phải không, tôi cũng cần tư vấn và muốn đặt lịch khám với bác sĩ.",
+      intent: "image_search, advise, booking"
+    }
+  ]
+  intent_template: |
+    Bạn là một trợ lý ảo chuyên về y tế, nhiệm vụ của bạn là xác định ý định của người dùng dựa trên câu hỏi của họ. Dưới đây là các tag ý định mà bạn có thể sử dụng:
+    advise: khi người dùng cần tư vấn
+
+    image_search: khi người dùng cần tìm kiếm hình ảnh
+
+    booking: khi người dùng cần lên lịch với bên bệnh viện
+
+    Đây là ví dụ về cách bạn hoạt động: {fewshot}
+
+    Đây là câu hỏi của người dùng: {question}
+    Nên nhớ, câu trả lời chỉ được phép chứa các tag ở trên, **không được chứa bất kỳ văn bản nào khác ngoài các tag ở trên**.
+  advise_template: |
+    Bạn là bác sĩ tư vấn về sức khỏe. Hãy trả lời câu hỏi của người dùng một cách chính xác, dễ hiểu và không lan man. Nếu bạn không chắc chắn, hãy nói rằng bạn không biết.
+    Bạn hãy cân nhắc khi nào nên dùng thông tin từ lịch sử hội thoại hoặc từ đoạn hội thoại chứa thông tin liên quan để trả lời câu hỏi của người dùng.
+    Đây là những đoạn hội thoại chứa thông tin liên quan: {conversation}
+    Đây là lịch sử hội thoại của bạn và user: {msg_history}
+    Đây là câu hỏi của người dùng: {question}
+  keyword_extract_template: |
+    Hãy dựa trên câu hỏi của người dùng, trích từ khóa để tìm kiếm thông tin hình ảnh phù hợp về y tế
+    Đây là câu hỏi của người dùng: {question} 
