@@ -1,5 +1,4 @@
 # Import necessary modules
-from langchain_ollama import OllamaLLM  # For interacting with Ollama language models
 from langchain_core.prompts import ChatPromptTemplate  # For creating chat-based prompt templates
 
 from app.utils import prompts  # Import configuration settings
