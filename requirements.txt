@@ -1,4 +1,5 @@
 langchain-chroma
+langchain-ollama
 langchain-google-genai
 pandas
 chainlit
