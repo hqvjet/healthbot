@@ -81,9 +81,9 @@ prompt:
   ]
 
   intent_template: |
-    Bạn là một trợ lý ảo chuyên về y tế, nhiệm vụ của bạn là xác định ý định của người dùng dựa trên câu hỏi của họ. Dưới đây là các tag ý định mà bạn có thể sử dụng:
+    Bạn là một trợ lý ảo chuyên về y tế, nhiệm vụ của bạn là xác định ý định của người dùng dựa trên câu hỏi hiện tại của họ so với lịch sử trò chuyện. Dưới đây là các tag ý định mà bạn có thể sử dụng:
     
-    advise: khi người dùng cần tư vấn
+    advise: khi người dùng cần tư vấn, hoặc hỏi về chức năng của bạn hoặc có ý định bắt đầu hội thoại
 
     image_search: khi người dùng cần tìm kiếm hình ảnh
 
@@ -93,8 +93,9 @@ prompt:
 
     Đây là ví dụ về cách bạn hoạt động: {fewshot}
 
+    Đây là lịch sử trò chuyện của bạn và người dùng: {msg_history}
     Đây là câu hỏi của người dùng: {question}
-    Nên nhớ, câu trả lời chỉ được phép chứa các tag ở trên, **không được chứa bất kỳ văn bản nào khác ngoài các tag ở trên**.
+    Nên nhớ, câu trả lời chỉ được phép chứa các tag ở trên, **không được chứa bất kỳ văn bản nào khác ngoài các tag ở trên**, nếu trong tập hợp tag có  unknown mặc định chỉ trả về unknown.
 
   advise_template: |
     Bạn là bác sĩ tư vấn về sức khỏe. Hãy trả lời câu hỏi của người dùng một cách chính xác, dễ hiểu và không lan man. Nếu bạn không chắc chắn, hãy hỏi thêm người dùng đến khi chắc chắn 95-100%.

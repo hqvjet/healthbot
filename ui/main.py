@@ -31,10 +31,14 @@ async def start():
 @cl.on_message
 async def handle_message(message: cl.Message):
     message_history = cl.user_session.get("HealthBot")
+    print(f"Message history: {message_history}")
+    print(type(message_history))
 
     msg = cl.Message(content="")
+    await msg.send()
 
-    intents = orc.classify_intent(message.content)
+    intents = orc.classify_intent(message.content, message_history)
+    print(f"Intents: {intents}")
 
     if intents[0] == INTENTS[-1]:  # If the intent is 'unknown'
         msg.content = "Xin lỗi, tôi chỉ có nhiệm vụ tư vấn và hỗ trợ bạn về vấn đề sức khỏe. Bạn có thể thử hỏi lại hoặc cung cấp thêm thông tin chi tiết hơn."
@@ -49,14 +53,14 @@ async def handle_message(message: cl.Message):
             
             if intent == INTENTS[1]:
                 resp = orc.get_image_search_results(message.content)
-                print(resp)
                 imgs = []
                 for element in resp:
                     imgs.append(
                         cl.Image(
                             name=element['title'],
-                            url=element['thumbnail'],
+                            url=element['link'],
                             display='inline',
+
                         )
                     )
                 
