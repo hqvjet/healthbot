@@ -1,5 +1,5 @@
 document:
   model: "bge-m3"
   dataset1: "hungnm/vietnamese-medical-qa"
-  db_location: "data/vector_db"
-  docs_location: "data/QA_docs"
+  db_location: "app/data/vector_db"
+  docs_location: "app/data/QA_docs"
