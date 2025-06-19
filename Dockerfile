@@ -28,5 +28,4 @@ CMD ollama serve > /tmp/ollama.log 2>&1 & \
     ollama pull bge-m3; \
     kill $pid; \
     exec ollama serve & \
-    exec python3 app/data/create_vectordb.py & \
     exec chainlit run ui/main.py --host 0.0.0.0 --port 8000
