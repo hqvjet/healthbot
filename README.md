@@ -1,70 +1,67 @@
-# Health Diagnosis Chatbot
+# HealthBot
 
-A conversational AI chatbot that helps users with preliminary health diagnosis and medical advice using advanced language models.
-
-## Overview
-
-This chatbot leverages multiple specialized agents to provide a comprehensive health consultation experience:
-- Symptom Analysis
-- Medical Diagnosis
-- Health Advice
+HealthBot is a conversational assistant that offers preliminary health advice and disease-related image search. It showcases a multi-agent design powered by Chainlit and Google Generative AI.
 
 ## Features
 
-- Interactive chat interface using Chainlit
-- Multi-agent architecture for specialized health-related tasks
-- Real-time symptom analysis and diagnosis suggestions
-- Medical advice based on user inputs
-- Error handling and graceful session management
+- **Intent classification** to detect whether a user needs advice, images or both.
+- **Health advice agent** that retrieves relevant documents from a vector database built with the `hungnm/vietnamese-medical-qa` dataset.
+- **Image search agent** using Google Custom Search to fetch medical illustrations.
+- **Chainlit interface** with OAuth and password authentication examples.
+- **Dockerfile** for easy deployment with Ollama and the `bge-m3` embedding model.
 
-## Prerequisites
+## Requirements
 
-- Python 3.12.1
-- Ollama
-- Required Python packages (listed in requirements.txt)
+- Python 3.12+
+- [Ollama](https://ollama.com) installed locally
+- Packages from `requirements.txt`
 
-## Installation
+## Quick Start
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd healthbot
-```
-
-2. Install the required dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-## Usage
-
-To start the chatbot, run:
-```bash
-chainlit run ui/app.py
-```
-
-The chatbot will be available at `http://localhost:8000` by default.
+1. Clone the repository and install dependencies:
+   ```bash
+   git clone <repository-url>
+   cd healthbot
+   pip install -r requirements.txt
+   ```
+2. Copy environment variables template and edit it with your keys:
+   ```bash
+   cp .env_example .env
+   ```
+3. (Optional) Build the vector store:
+   ```bash
+   python app/data/create_vectordb.py
+   ```
+4. Launch the chatbot:
+   ```bash
+   chainlit run ui/main.py
+   ```
+   The UI will be available at `http://localhost:8000`.
 
 ## Project Structure
 
 ```
 ├── app/
-│   ├── agents/           # Specialized AI agents
-│   │   ├── advice_agent.py
-│   │   ├── diagnosis_agent.py
-│   │   └── symptom_agent.py
-│   ├── chains/          # Language model chains
-│   │   └── health_chain.py
-│   └── config.yaml      # Configuration settings
+│   ├── agents/              # AI agents and orchestrator
+│   ├── data/                # Vector store utilities
+│   └── utils.py             # Config and prompt loaders
 ├── ui/
-│   └── app.py          # Main application interface
-├── data/               # Data resources
-└── tests/              # Test suite
+│   └── main.py              # Chainlit entrypoint
+├── Dockerfile               # Container configuration
+└── requirements.txt         # Python dependencies
 ```
 
-## Contributing
+## Environment Variables
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+The application relies on several variables (see `.env_example`):
+
+- `AI_STUDIO_API_KEY`
+- `GOOGLE_CUSTOM_SEARCH_API_KEY`
+- `SEARCH_ENGINE_ID`
+- `CHAINLIT_AUTH_SECRET`
+- `OAUTH_GOOGLE_CLIENT_ID`
+- `OAUTH_GOOGLE_CLIENT_SECRET`
+- `DATABASE_URL`
 
 ## License
 
@@ -72,4 +69,4 @@ None
 
 ## Disclaimer
 
-This chatbot is for informational purposes only and should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.
+HealthBot is intended for informational purposes only and should not be used as a substitute for professional medical advice, diagnosis or treatment. Always seek the guidance of a qualified healthcare provider with any questions regarding a medical condition.
