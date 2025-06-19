@@ -33,7 +33,7 @@ class Orchestrator:
         self.advise_agent = agents.AdviseAgent(model=model, retriever=self.retriever)
         self.disease_image_search_agent = agents.DiseaseImageSearchAgent(model=model)
 
-    def classify_intent(self, query: str):
+    def classify_intent(self, query: str, msg_history: list):
         """
         Classify the intent of a user query.
 
@@ -43,10 +43,10 @@ class Orchestrator:
         Returns:
             A list of classified intents.
         """
-        intents = self.intent_classifier.invoke(query)
+        intents = self.intent_classifier.invoke(query, msg_history)
         return intents
 
-    def get_advice(self, query: str, msg_history: str=None):
+    def get_advice(self, query: str, msg_history: list):
         """
         Get health advice based on the user query and message history.
 

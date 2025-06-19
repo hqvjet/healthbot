@@ -1,8 +1,13 @@
 # Import necessary modules
-from duckduckgo_search import DDGS  # For performing image searches using DuckDuckGo
 from langchain_core.prompts import ChatPromptTemplate  # For creating chat-based prompt templates
+import os
+from dotenv import load_dotenv  # For loading environment variables from a .env file
+import requests  # For making HTTP requests to external APIs
 
 from app.utils import prompts  # Import configuration settings
+
+
+load_dotenv()
 
 class DiseaseImageSearchAgent:
     """
@@ -20,11 +25,11 @@ class DiseaseImageSearchAgent:
         Args:
             model: An optional language model. If not provided, a default model can be used.
         """
-        self.search_engine = DDGS()
+        self.url = "https://www.googleapis.com/customsearch/v1"
         prompt = ChatPromptTemplate.from_template(prompts['keyword_extract_template'])
         self.chain = prompt | model
 
-    def search_img(self, query: str):
+    def search_img(self, query: str, **params):
         """
         Search for images related to the given query using DuckDuckGo.
 
@@ -34,8 +39,19 @@ class DiseaseImageSearchAgent:
         Returns:
             A list of image search results.
         """
-        results = DDGS().images(keywords=query, max_results=4)
-        return results
+        params = {
+            "key": os.getenv('GOOGLE_CUSTOM_SEARCH_API_KEY'),  # API key for Google Custom Search
+            "cx": os.getenv('SEARCH_ENGINE_ID'),  # Custom Search Engine ID
+            "q": query,
+            "searchType": "image",  # Specify that we want image search results
+            "num": 2,
+            **params
+        }
+        res = requests.get(self.url, params=params)
+        res.raise_for_status()
+        res = res.json()
+        res = res['items']
+        return res
 
     def execute(self, query: str):
         """

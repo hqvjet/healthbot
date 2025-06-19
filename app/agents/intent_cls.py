@@ -24,7 +24,7 @@ class IntentClassifier:
         prompt = ChatPromptTemplate.from_template(prompts['intent_template'])
         self.chain = prompt | model
 
-    def invoke(self, query: str) -> str:
+    def invoke(self, query: str, msg_history) -> str:
         """
         Invoke the intent classification chain with a user query.
 
@@ -34,7 +34,7 @@ class IntentClassifier:
         Returns:
             A list of classified intents as strings.
         """
-        intents = self.chain.invoke({"question": query, "fewshot": prompts['intent_fewshot']}).content
+        intents = self.chain.invoke({"question": query, "msg_history": msg_history, "fewshot": prompts['intent_fewshot']}).content
         intents = intents.strip().replace(' ', '')
         intents = intents.split(',')
         return intents
