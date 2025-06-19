@@ -5,3 +5,4 @@ pandas
 chainlit
 datasets
 python-dotenv
+asyncpg
